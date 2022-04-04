@@ -119,7 +119,7 @@ public class MainSceneController {
 	@FXML
 	private Button btnRemove; // remove button 
 	
-	ToggleGroup radioGroup = new ToggleGroup();
+	ToggleGroup radioGroup = new ToggleGroup(); // group radio buttons together
 	
 	/**
 	 * constructor that creates new arraylist and loads data from text file
@@ -184,22 +184,13 @@ public class MainSceneController {
 	@FXML
 	public void ClickSearch(ActionEvent event) {
 		for (Toy t : toys) {
-			if (radioSn.isSelected()) {
-				if (txtSn.getText() == t.getSn()) {
-					
-				}
-				
-			} else if (radioName.isSelected()) {
-				if (txtName.getText() == t.getName()) {
-						
-			}
-				
-			} else if (radioType.isSelected()) {
-				
+			if (txtSn.getText().contains(t.getSn())) {
+				sn = txtSn.getText();
+				t.setSn(sn);
+				ObservableList<Toy> strList = FXCollections.observableArrayList(t);
+				listView.setItems(strList);
 			}
 		}
-	//	ObservableList<Toy> strList = FXCollections.observableArrayList(toys);
-	//	listView.setItems(strList);
 	}
 	
 	// Event Listener on Button[#btnClear].onAction
@@ -234,64 +225,12 @@ public class MainSceneController {
 		UserInput = new Scanner(System.in);
 		sn = txtSnAdd.getText();
 		
-/**		while(sn.length()!=10) {
-			System.out.println("The Serial Number's Length Must be 10 digits! Try Again. ");
-			System.out.print("\nEnter Serial number: ");
-			sn = UserInput.nextLine();
-		}
-			
-		for(int i = 0; i < sn.length(); i++) {
-			
-			while(!Character.isDigit(sn.charAt(i))) {
-				System.out.println("The Serial Number Should Only Contain Digits! Try Again. ");
-				System.out.print("\nEnter Serial number: ");
-				sn = UserInput.nextLine();
-			}
-		}
-		
-		// used to read file
-				String valuestring;
-				// file reader object
-				file=new FileReader("res/toys.txt");
-				// buffered reader object
-				input=new BufferedReader(file);
-				
-				while((valuestring = input.readLine()) !=null){
-					// each value contains different information about toy
-					String [] value=valuestring.trim().split(";");
-				
-					while(sn.equals(value[0])) {
-						System.out.println("\nA Toy With This Serial Number Already Exists.");
-						System.out.println("\nEnter Serial Number: ");
-						// used to store user input for toy serial number
-						sn=UserInput.nextLine();
-					}
-				} */
-		
 		addCommonAttributes();
+		
 		if (categoryBox.getValue().equals("Animal")) {
 			String material = txtMaterial.getText();
 			
-	/**		for(int i=0 ; i < material.length() ; i++) {
-				
-				while(Character.isDigit(material.charAt(i))) {
-					System.out.println("\nThe Toy Material should not contain any digits. Please try again.");
-					System.out.print("\nEnter Toy Material: \n");
-					material = UserInput.nextLine();
-				}
-			} */
-			
 			char size = txtSize.getText().charAt(0);
-			
-		/**	if (size == 'S') {
-				size = 'S';
-			} else if (size == 'M') {
-				size = 'M';
-			} else if (size == 'L') {
-				size = 'L';
-			} else {
-				System.out.println("\nThere is an error, please try again.\n");
-			} */
 			
 			Toy animals=new Animal(sn,name,brand,price,available_count,age_appropriate,material,size);
 			((Animal) animals).format();
@@ -301,35 +240,9 @@ public class MainSceneController {
 		if (categoryBox.getValue().equals("Board Game")) {
 			int minNumOfPlayers = Integer.parseInt(txtMinNumOfPlayers.getText());
 			int maxNumOfPlayers = Integer.parseInt(txtMaxNumOfPlayers.getText());
-	/**		while(minNumOfPlayers > maxNumOfPlayers) {
-				System.out.print("\nMinimum Number of Players Should not Exceed The Maximum Number of Players. Please try again.\n");
-				System.out.print("\nEnter Minimum Number Of Players : ");
-				minNumOfPlayers = Integer.parseInt(UserInput.nextLine());
-				
-				System.out.print("\nEnter Maximum Number Of Players : ");
-				maxNumOfPlayers = Integer.parseInt(UserInput.nextLine());
-			}
-			
-			while(minNumOfPlayers == maxNumOfPlayers) {
-				System.out.print("\nMinimum Number of Players Should Be Less Than The Maximum Number of Players. Please try again.\n");
-				System.out.print("\nEnter Minimum Number Of Players : ");
-				minNumOfPlayers = Integer.parseInt(UserInput.nextLine());
-				
-				System.out.print("\nEnter Maximum Number Of Players : ");
-				maxNumOfPlayers = Integer.parseInt(UserInput.nextLine());
-			} */
 			
 			String numOfPlayers="" + minNumOfPlayers + "-" +maxNumOfPlayers;
 			String designer = txtDesigners.getText();
-			
-/**			for(int i= 0; i < designer.length(); i++) {
-				
-				while(Character.isDigit(designer.charAt(i))) {
-					System.out.println("\nThe Designer Name should not contain digits! Try Again. ");
-					System.out.print("\nEnter Designer Name"+"(Use ',' to separate the names if there is more than one name): \n ");
-					designer = UserInput.nextLine();
-				}
-			} */
 			
 			Toy boardgames=new BoardGame(sn,name,brand,price,available_count,age_appropriate,numOfPlayers,designer);
 			((BoardGame) boardgames).format();
@@ -338,16 +251,6 @@ public class MainSceneController {
 		
 		if (categoryBox.getValue().equals("Figure")) {
 		char classification = txtClassification.getText().charAt(0);
-/**			if (classification == 'A') {
-				classification = 'A';
-			} else if (classification == 'D') {
-				classification = 'D';
-			} else if (classification == 'H') {
-				classification = 'H';
-			} else {
-				System.out.println("\nError, Please try again.\n");
-			} */
-			
 			Toy figures=new Figure(sn,name,brand,price,available_count,age_appropriate,classification);
 			((Figure) figures).format();
 			toys.add(figures);
@@ -355,21 +258,6 @@ public class MainSceneController {
 		
 		if (categoryBox.getValue().equals("Puzzle")) {
 			char puzzleType = txtPuzType.getText().charAt(0);
-			
-/**			if (puzzleType == 'M') {
-				puzzleType = 'M';
-			} else if (puzzleType == 'C') {
-				puzzleType = 'C';
-			} else if (puzzleType == 'L') {
-				puzzleType = 'L';
-			} else if (puzzleType == 'T') {
-				puzzleType = 'T';
-			} else if (puzzleType == 'R') {
-				puzzleType = 'R';
-			} else {
-				System.out.println("\nThere is an error, please try again.\n");
-			} */
-			
 			
 			Toy puzzles=new Puzzle(sn,name,brand,price,available_count,age_appropriate,puzzleType);
 			((Puzzle) puzzles).format();
@@ -390,8 +278,8 @@ public class MainSceneController {
 				toy = t;
 				toys.remove(toy);
 				save();
-			}
-		}
+			} 
+		} 
 	}
 	
 	/**
