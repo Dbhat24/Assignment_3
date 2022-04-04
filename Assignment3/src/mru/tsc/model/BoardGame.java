@@ -1,4 +1,4 @@
-package model;
+package mru.tsc.model;
 
 public class BoardGame extends Toy {
 	private String designer;

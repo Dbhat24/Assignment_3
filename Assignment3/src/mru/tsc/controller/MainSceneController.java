@@ -1,15 +1,18 @@
-package controller;
+package mru.tsc.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import model.Animal;
-import model.BoardGame;
-import model.Figure;
-import model.Puzzle;
-import model.Toy;
+import mru.tsc.model.Animal;
+import mru.tsc.model.BoardGame;
+import mru.tsc.model.Figure;
+import mru.tsc.model.Puzzle;
+import mru.tsc.model.Toy;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -30,89 +33,94 @@ import javafx.scene.control.ChoiceBox;
 public class MainSceneController {
 	private final String FILE_NAME = "res/toys.txt"; //
 	
-	ArrayList<Toy> toys; //
+	ArrayList<Toy> toys; // arraylist of toy
 	
-	Scanner UserInput; //
+	Scanner UserInput; // scanner object
+	
+	FileReader file; // file reader object
+	
+	BufferedReader input; // buffered reader object
+	
 	
 	@FXML
-	ObservableList<String> categoriesList = FXCollections.observableArrayList("Animal", "Board Game", "Figure", "Puzzle"); //
+	ObservableList<String> categoriesList = FXCollections.observableArrayList("Animal", "Board Game", "Figure", "Puzzle"); // categories for categorybox
 	
-	String sn; //
-	
-	String name; //
+	String sn; // toy serial number
 	 
-	String brand; //
+	String name; // toy name
+	 
+	String brand; // toy brand
 	
-	double price; //
+	double price; // price of toy
 	
-	int available_count; //
+	int available_count; // amount of stock for toy
 	
-	int age_appropriate; //
+	int age_appropriate; // age rating for toy
 
 	
 	@FXML
-	private RadioButton radioSn; //
+	private RadioButton radioSn; // radiobutton for serial number
 	@FXML
-	private RadioButton radioName; //
+	private RadioButton radioName; // radiobutton for name
 	@FXML
-	private RadioButton radioType; //
+	private RadioButton radioType; // radiobutton for type
 	@FXML
-	private Label lblSn; //
+	private Label lblSn; // serial number label
 	@FXML
-	private TextField txtSn; //
+	private TextField txtSn; // textfield serial number
 	@FXML
-	private TextField txtName; //
+	private TextField txtName; // textfield name
 	@FXML
-	private TextField txtType; //
+	private TextField txtType; // textfield type
 	@FXML
-	private Label lblName; //
+	private Label lblName; // name label
 	@FXML
-	private Label lblType; //
+	private Label lblType; // type label
 	@FXML
-	private Button btnSearch; //
+	private Button btnSearch; // search button
 	@FXML
-	private Button btnClear; //
+	private Button btnClear; // clear button
 	@FXML
-	private Button btnBuy; //
+	private Button btnBuy; // buy button
 	@FXML
-	private ListView<Toy> listView; //
+	private ListView<Toy> listView; // list view
 	@FXML
-	private TextField txtSnAdd; //
+	private TextField txtSnAdd; // serial number add tab
 	@FXML
-	private TextField txtNameAdd; //
+	private TextField txtNameAdd; // name add tab
 	@FXML
-	private TextField txtBrand; //
+	private TextField txtBrand; // brand add tab
 	@FXML
-	private TextField txtAgeAppropriate; //
+	private TextField txtAgeAppropriate; // age appropriate add tab
 	@FXML
-	private TextField txtAvailableCount; //
+	private TextField txtAvailableCount; // available count add tab
 	@FXML
-	private TextField txtPrice; //
+	private TextField txtPrice; // price add tab
 	@FXML
-	private Button btnSave; //
+	private Button btnSave; // save button
 	@FXML
-	private TextField txtClassification; //
+	private TextField txtClassification; // classification add tab
 	@FXML
-	private TextField txtPuzType; //
+	private TextField txtPuzType; // puzzle type add tab
 	@FXML
-	private TextField txtMaterial; //
+	private TextField txtMaterial; // material add tab
 	@FXML
-	private TextField txtSize; //
+	private TextField txtSize; // size add tab
 	@FXML
-	private TextField txtMinNumOfPlayers; //
+	private TextField txtMinNumOfPlayers; // minimum number of players add tab
 	@FXML
-	private TextField txtMaxNumOfPlayers; //
+	private TextField txtMaxNumOfPlayers; // maximum number of players add tab
 	@FXML
-	private TextField txtDesigners; //
+	private TextField txtDesigners; // designer(s) add tab
 	@FXML
-	private ChoiceBox<String> categoryBox; //
+	private ChoiceBox<String> categoryBox; // category box containing types of toys
 	@FXML
-	private TextField txtSnRemove; //
+	private TextField txtSnRemove; // serial number remove tab
 	@FXML
-	private Button btnRemove; //
+	private Button btnRemove; // remove button 
 	
 	/**
-	 * 
+	 * constructor that creates new arraylist and loads data from text file
 	 * @throws Exception
 	 */
 	public MainSceneController() throws Exception {
@@ -161,10 +169,10 @@ public class MainSceneController {
 	@FXML
 	public void ClickSearch(ActionEvent event) {
 		Toy t = (Toy) listView.getSelectionModel().getSelectedItem();
-		for (Toy temp: toys) {
-			if (temp.getSn() == t.getSn()) {
+		for (Toy to: toys) {
+			if (to.getSn() == t.getSn()) {
 				// view list
-			} else if (temp.getName() == t.getName()) {
+			} else if (to.getName() == t.getName()) {
 				// view list
 			} 
 		}
@@ -180,8 +188,8 @@ public class MainSceneController {
 	@FXML
 	public void ClickBuy(ActionEvent event) throws Exception {
 			Toy t = (Toy) listView.getSelectionModel().getSelectedItem();
-			for (Toy temp: toys) {
-				if (temp.getSn() == t.getSn()) {
+			for (Toy to: toys) {
+				if (to.getSn() == t.getSn()) {
 				int newCount = t.getAvailableCount();
 				newCount -= 1;
 				t.setAvailableCount(newCount);
@@ -195,10 +203,66 @@ public class MainSceneController {
 	@FXML
 	public void ClickSave(ActionEvent event) throws IOException {
 		sn = txtSn.getText();
+		
+		while(sn.length()!=10) {
+			System.out.println("The Serial Number's Length Must be 10 digits! Try Again. ");
+			System.out.print("\nEnter Serial number: ");
+			sn = UserInput.nextLine();
+		}
+			
+		for(int i = 0; i < sn.length(); i++) {
+			
+			while(!Character.isDigit(sn.charAt(i))) {
+				System.out.println("The Serial Number Should Only Contain Digits! Try Again. ");
+				System.out.print("\nEnter Serial number: ");
+				sn = UserInput.nextLine();
+			}
+		}
+		
+		// used to read file
+				String valuestring;
+				// file reader object
+				file=new FileReader("res/toys.txt");
+				// buffered reader object
+				input=new BufferedReader(file);
+				
+				while((valuestring = input.readLine()) !=null){
+					// each value contains different information about toy
+					String [] value=valuestring.trim().split(";");
+				
+					while(sn.equals(value[0])) {
+						System.out.println("\nA Toy With This Serial Number Already Exists.");
+						System.out.println("\nEnter Serial Number: ");
+						// used to store user input for toy serial number
+						sn=UserInput.nextLine();
+					}
+				}
+		
 		addCommonAttributes();
 		if (categoryBox.getValue().equals("Animal")) {
 			String material = txtMaterial.getText();
+			
+			for(int i=0 ; i < material.length() ; i++) {
+				
+				while(Character.isDigit(material.charAt(i))) {
+					System.out.println("\nThe Toy Material should not contain any digits. Please try again.");
+					System.out.print("\nEnter Toy Material: \n");
+					material = UserInput.nextLine();
+				}
+			}
+			
 			char size = txtSize.getText().charAt(0);
+			
+			if (size == 'S') {
+				size = 'S';
+			} else if (size == 'M') {
+				size = 'M';
+			} else if (size == 'L') {
+				size = 'L';
+			} else {
+				System.out.println("\nThere is an error, please try again.\n");
+			}
+			
 			Toy animals=new Animal(sn,name,brand,price,available_count,age_appropriate,material,size);
 			((Animal) animals).format();
 			toys.add(animals);
@@ -208,8 +272,36 @@ public class MainSceneController {
 		if (categoryBox.getValue().equals("Board Game")) {
 			int minNumOfPlayers = Integer.parseInt(txtMinNumOfPlayers.getText());
 			int maxNumOfPlayers = Integer.parseInt(txtMaxNumOfPlayers.getText());
+			while(minNumOfPlayers > maxNumOfPlayers) {
+				System.out.print("\nMinimum Number of Players Should not Exceed The Maximum Number of Players. Please try again.\n");
+				System.out.print("\nEnter Minimum Number Of Players : ");
+				minNumOfPlayers = Integer.parseInt(UserInput.nextLine());
+				
+				System.out.print("\nEnter Maximum Number Of Players : ");
+				maxNumOfPlayers = Integer.parseInt(UserInput.nextLine());
+			}
+			
+			while(minNumOfPlayers == maxNumOfPlayers) {
+				System.out.print("\nMinimum Number of Players Should Be Less Than The Maximum Number of Players. Please try again.\n");
+				System.out.print("\nEnter Minimum Number Of Players : ");
+				minNumOfPlayers = Integer.parseInt(UserInput.nextLine());
+				
+				System.out.print("\nEnter Maximum Number Of Players : ");
+				maxNumOfPlayers = Integer.parseInt(UserInput.nextLine());
+			}
+			
 			String numOfPlayers="" + minNumOfPlayers + "-" +maxNumOfPlayers;
 			String designer = txtDesigners.getText();
+			
+			for(int i= 0; i < designer.length(); i++) {
+				
+				while(Character.isDigit(designer.charAt(i))) {
+					System.out.println("\nThe Designer Name should not contain digits! Try Again. ");
+					System.out.print("\nEnter Designer Name"+"(Use ',' to separate the names if there is more than one name): \n ");
+					designer = UserInput.nextLine();
+				}
+			}
+			
 			Toy boardgames=new BoardGame(sn,name,brand,price,available_count,age_appropriate,numOfPlayers,designer);
 			((BoardGame) boardgames).format();
 			toys.add(boardgames);
@@ -219,6 +311,16 @@ public class MainSceneController {
 		
 		if (categoryBox.getValue().equals("Figure")) {
 			char classification = txtClassification.getText().charAt(0);
+			if (classification == 'A') {
+				classification = 'A';
+			} else if (classification == 'D') {
+				classification = 'D';
+			} else if (classification == 'H') {
+				classification = 'H';
+			} else {
+				System.out.println("\nError, Please try again.\n");
+			}
+			
 			Toy figures=new Figure(sn,name,brand,price,available_count,age_appropriate,classification);
 			((Figure) figures).format();
 			toys.add(figures);
@@ -227,6 +329,21 @@ public class MainSceneController {
 		
 		if (categoryBox.getValue().equals("Puzzle")) {
 			char puzzleType = txtPuzType.getText().charAt(0);
+			
+			if (puzzleType == 'M') {
+				puzzleType = 'M';
+			} else if (puzzleType == 'C') {
+				puzzleType = 'C';
+			} else if (puzzleType == 'L') {
+				puzzleType = 'L';
+			} else if (puzzleType == 'T') {
+				puzzleType = 'T';
+			} else if (puzzleType == 'R') {
+				puzzleType = 'R';
+			} else {
+				System.out.println("\nThere is an error, please try again.\n");
+			}
+			
 			Toy puzzles=new Puzzle(sn,name,brand,price,available_count,age_appropriate,puzzleType);
 			((Puzzle) puzzles).format();
 			toys.add(puzzles);
@@ -251,7 +368,7 @@ public class MainSceneController {
 	}
 	
 	/**
-	 * 
+	 * groups all common attributes
 	 */
 	public void addCommonAttributes() {
 		name = txtNameAdd.getText();
@@ -262,7 +379,7 @@ public class MainSceneController {
 	}
 	
 	/**
-	 * 
+	 * load data method that loads the data from the text file
 	 * @throws IOException
 	 */
 	public void loadData() throws IOException {
@@ -339,7 +456,7 @@ public class MainSceneController {
 	}
 	
 	/**
-	 * 
+	 * save method that saves data into text file
 	 * @throws IOException
 	 */
 	public void save() throws IOException {

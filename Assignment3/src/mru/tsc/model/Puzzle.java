@@ -1,4 +1,4 @@
-package model;
+package mru.tsc.model;
 
 public class Puzzle extends Toy {
 	private char puzzleType;

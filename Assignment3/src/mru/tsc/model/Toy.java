@@ -1,4 +1,4 @@
-package model;
+package mru.tsc.model;
 
 //toy class must be abstract class, no object will be created for this class
 public abstract class Toy {

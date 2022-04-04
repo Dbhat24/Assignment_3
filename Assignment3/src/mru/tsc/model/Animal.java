@@ -1,4 +1,4 @@
-package model;
+package mru.tsc.model;
 
 public class Animal extends Toy {
 	private String material;
