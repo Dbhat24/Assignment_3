@@ -9,9 +9,6 @@ import mru.tsc.model.BoardGame;
 import mru.tsc.model.Figure;
 import mru.tsc.model.Puzzle;
 import mru.tsc.model.Toy;
-
-import java.awt.event.FocusAdapter;
-import java.awt.event.KeyAdapter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -131,7 +128,9 @@ public class MainSceneController {
 	}
 	
 	@FXML
-	//
+	/**
+	 * Initialize method that creates categories for category box and items in toggle group
+	 */
 	public void initialize() {
 		ObservableList<String> toyTypes = FXCollections.observableArrayList("Animal", "Board Game", "Figure", "Puzzle"); // categories for categorybox
 		categoryBox.setItems(toyTypes);
@@ -182,17 +181,30 @@ public class MainSceneController {
 	
 	// Event Listener on Button[#btnSearch].onAction
 	@FXML
-	public void ClickSearch(ActionEvent event) {
+	public void ClickSearch(ActionEvent event) throws Exception {
 		for (Toy t : toys) {
-			if (txtSn.getText().contains(t.getSn())) {
-				sn = txtSn.getText();
-				t.setSn(sn);
-				ObservableList<Toy> strList = FXCollections.observableArrayList(t);
-				listView.setItems(strList);
+			if (radioSn.isSelected()) {
+				if (txtSn.getText().contains(t.getSn())) {
+					sn = txtSn.getText();
+					t.setSn(sn);
+					ObservableList<Toy> strList = FXCollections.observableArrayList(t);
+					listView.setItems(strList);
+				}
+			}
+		}
+		
+		for (Toy t : toys) {
+			if (radioName.isSelected()) {
+				if (txtName.getText().contains(t.getName())) {
+					name = txtName.getText();
+					t.setName(name);
+					ObservableList<Toy> strList = FXCollections.observableArrayList(t);
+					listView.setItems(strList);
+				}
 			}
 		}
 	}
-	
+
 	// Event Listener on Button[#btnClear].onAction
 	@FXML
 	public void ClickClear(ActionEvent event) throws Exception {
