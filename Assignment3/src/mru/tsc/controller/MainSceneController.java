@@ -80,7 +80,7 @@ public class MainSceneController {
 	@FXML
 	private Button btnBuy; // buy button
 	@FXML
-	private ListView<Toy> listView; // list view
+	private ListView<Toy> listView; // list view home tab
 	@FXML
 	private TextField txtSnAdd; // serial number add tab
 	@FXML
@@ -115,6 +115,11 @@ public class MainSceneController {
 	private TextField txtSnRemove; // serial number remove tab
 	@FXML
 	private Button btnRemove; // remove button 
+
+	@FXML
+	private ListView<Toy> listView2; // list view remove tab
+	@FXML
+	private Button search2; // search button remove tab
 	
 	ToggleGroup radioGroup = new ToggleGroup(); // group radio buttons together
 	
@@ -213,7 +218,9 @@ public class MainSceneController {
 		lblSn.setStyle("-fx-text-fill: black;");
 		lblName.setStyle("-fx-text-fill: black;");
 		lblType.setStyle("-fx-text-fill: black;");
-		// radio buttons 
+		txtSn.clear();
+		txtName.clear();
+		txtType.clear();
 	}
 	
 	// Event Listener on Button[#btnBuy].onAction
@@ -278,20 +285,30 @@ public class MainSceneController {
 		save();
 	}
 	
+	// Event Listener on Button[#search2].onAction
+	@FXML
+	public void ClickSearch2(ActionEvent event) {
+		for (Toy t : toys) {
+			if (txtSnRemove.getText().contains(t.getSn())) {
+				sn = txtSnRemove.getText();
+				t.setSn(sn);
+				ObservableList<Toy> strList = FXCollections.observableArrayList(t);
+				listView2.setItems(strList);
+			}
+		}
+	}
+	
 	// Event Listener on Button[#btnRemove].onAction
 	@FXML
-	public void ClickRemove(ActionEvent event) throws RuntimeException, Exception {
-		sn = txtSnRemove.getText();
-		
-		Toy toy = null;
-		
-		for (Toy t : toys) {
-			if (t.getSn().equals(sn)) {
-				toy = t;
-				toys.remove(toy);
+	public void ClickRemove(ActionEvent event) throws Exception {
+		Toy t = (Toy) listView2.getSelectionModel().getSelectedItem();
+		for (Toy to: toys) {
+			if(to.getSn() == t.getSn()) {
+				to = t;
+				toys.remove(to);
 				save();
-			} 
-		} 
+			}
+		}
 	}
 	
 	/**

@@ -106,10 +106,11 @@
                      <children>
                         <Label layoutX="20.0" layoutY="46.0" text="Enter Toy Serial Number:" />
                         <Separator layoutX="7.0" layoutY="138.0" prefHeight="10.0" prefWidth="248.0" />
-                        <Label layoutX="20.0" layoutY="197.0" text="Serial Number" />
-                        <TextField fx:id="txtSnRemove" layoutX="96.0" layoutY="227.0" prefHeight="26.0" prefWidth="160.0" />
-                        <Button fx:id="btnRemove" layoutX="86.0" layoutY="356.0" mnemonicParsing="false" onAction="#ClickRemove" prefHeight="30.0" prefWidth="76.0" text="Remove" />
-                        <ListView layoutX="270.0" layoutY="9.0" prefHeight="424.0" prefWidth="462.0" />
+                        <Label layoutX="20.0" layoutY="166.0" text="Serial Number" />
+                        <TextField fx:id="txtSnRemove" layoutX="104.0" layoutY="163.0" prefHeight="26.0" prefWidth="160.0" />
+                        <Button fx:id="btnRemove" layoutX="146.0" layoutY="356.0" mnemonicParsing="false" onAction="#ClickRemove" prefHeight="30.0" prefWidth="76.0" text="Remove" />
+                        <ListView fx:id="listView2" layoutX="270.0" layoutY="9.0" prefHeight="424.0" prefWidth="462.0" />
+                        <Button fx:id="search2" layoutX="38.0" layoutY="356.0" mnemonicParsing="false" onAction="#ClickSearch2" prefHeight="30.0" prefWidth="76.0" text="Search" />
                      </children>
                   </AnchorPane>
                </content></Tab>
