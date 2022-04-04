@@ -201,10 +201,11 @@ public class MainSceneController {
 	
 	// Event Listener on Button[#btnSave].onAction
 	@FXML
-	public void ClickSave(ActionEvent event) throws IOException {
-		sn = txtSn.getText();
+	public void ClickSave(ActionEvent event) throws Exception {
+		UserInput = new Scanner(System.in);
+		sn = txtSnAdd.getText();
 		
-		while(sn.length()!=10) {
+/**		while(sn.length()!=10) {
 			System.out.println("The Serial Number's Length Must be 10 digits! Try Again. ");
 			System.out.print("\nEnter Serial number: ");
 			sn = UserInput.nextLine();
@@ -236,24 +237,24 @@ public class MainSceneController {
 						// used to store user input for toy serial number
 						sn=UserInput.nextLine();
 					}
-				}
+				} */
 		
 		addCommonAttributes();
 		if (categoryBox.getValue().equals("Animal")) {
 			String material = txtMaterial.getText();
 			
-			for(int i=0 ; i < material.length() ; i++) {
+	/**		for(int i=0 ; i < material.length() ; i++) {
 				
 				while(Character.isDigit(material.charAt(i))) {
 					System.out.println("\nThe Toy Material should not contain any digits. Please try again.");
 					System.out.print("\nEnter Toy Material: \n");
 					material = UserInput.nextLine();
 				}
-			}
+			} */
 			
 			char size = txtSize.getText().charAt(0);
 			
-			if (size == 'S') {
+		/**	if (size == 'S') {
 				size = 'S';
 			} else if (size == 'M') {
 				size = 'M';
@@ -261,18 +262,17 @@ public class MainSceneController {
 				size = 'L';
 			} else {
 				System.out.println("\nThere is an error, please try again.\n");
-			}
+			} */
 			
 			Toy animals=new Animal(sn,name,brand,price,available_count,age_appropriate,material,size);
 			((Animal) animals).format();
 			toys.add(animals);
-			save();
 		}
 		
 		if (categoryBox.getValue().equals("Board Game")) {
 			int minNumOfPlayers = Integer.parseInt(txtMinNumOfPlayers.getText());
 			int maxNumOfPlayers = Integer.parseInt(txtMaxNumOfPlayers.getText());
-			while(minNumOfPlayers > maxNumOfPlayers) {
+	/**		while(minNumOfPlayers > maxNumOfPlayers) {
 				System.out.print("\nMinimum Number of Players Should not Exceed The Maximum Number of Players. Please try again.\n");
 				System.out.print("\nEnter Minimum Number Of Players : ");
 				minNumOfPlayers = Integer.parseInt(UserInput.nextLine());
@@ -288,30 +288,28 @@ public class MainSceneController {
 				
 				System.out.print("\nEnter Maximum Number Of Players : ");
 				maxNumOfPlayers = Integer.parseInt(UserInput.nextLine());
-			}
+			} */
 			
 			String numOfPlayers="" + minNumOfPlayers + "-" +maxNumOfPlayers;
 			String designer = txtDesigners.getText();
 			
-			for(int i= 0; i < designer.length(); i++) {
+/**			for(int i= 0; i < designer.length(); i++) {
 				
 				while(Character.isDigit(designer.charAt(i))) {
 					System.out.println("\nThe Designer Name should not contain digits! Try Again. ");
 					System.out.print("\nEnter Designer Name"+"(Use ',' to separate the names if there is more than one name): \n ");
 					designer = UserInput.nextLine();
 				}
-			}
+			} */
 			
 			Toy boardgames=new BoardGame(sn,name,brand,price,available_count,age_appropriate,numOfPlayers,designer);
 			((BoardGame) boardgames).format();
 			toys.add(boardgames);
-			save();
-			
 		}
 		
 		if (categoryBox.getValue().equals("Figure")) {
-			char classification = txtClassification.getText().charAt(0);
-			if (classification == 'A') {
+		char classification = txtClassification.getText().charAt(0);
+/**			if (classification == 'A') {
 				classification = 'A';
 			} else if (classification == 'D') {
 				classification = 'D';
@@ -319,18 +317,17 @@ public class MainSceneController {
 				classification = 'H';
 			} else {
 				System.out.println("\nError, Please try again.\n");
-			}
+			} */
 			
 			Toy figures=new Figure(sn,name,brand,price,available_count,age_appropriate,classification);
 			((Figure) figures).format();
 			toys.add(figures);
-			save();
 		}
 		
 		if (categoryBox.getValue().equals("Puzzle")) {
 			char puzzleType = txtPuzType.getText().charAt(0);
 			
-			if (puzzleType == 'M') {
+/**			if (puzzleType == 'M') {
 				puzzleType = 'M';
 			} else if (puzzleType == 'C') {
 				puzzleType = 'C';
@@ -342,18 +339,19 @@ public class MainSceneController {
 				puzzleType = 'R';
 			} else {
 				System.out.println("\nThere is an error, please try again.\n");
-			}
+			} */
+			
 			
 			Toy puzzles=new Puzzle(sn,name,brand,price,available_count,age_appropriate,puzzleType);
 			((Puzzle) puzzles).format();
 			toys.add(puzzles);
-			save();
 		}
+		save();
 	}
 	
 	// Event Listener on Button[#btnRemove].onAction
 	@FXML
-	public void ClickRemove(ActionEvent event) throws IOException {
+	public void ClickRemove(ActionEvent event) throws RuntimeException, Exception {
 		sn = txtSnRemove.getText();
 		
 		Toy toy = null;
