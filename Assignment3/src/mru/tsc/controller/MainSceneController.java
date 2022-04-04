@@ -146,6 +146,11 @@ public class MainSceneController {
 	public void radioSelectSn(ActionEvent event) {
 		if (radioSn.isSelected()) {
 			lblSn.setStyle("-fx-text-fill: red;");
+			lblName.setStyle("-fx-text-fill: black;");
+			lblType.setStyle("-fx-text-fill: black;");
+			txtType.setEditable(false);
+			txtName.setEditable(false);
+			txtSn.setEditable(true);
 		}
 	}
 	
@@ -154,6 +159,11 @@ public class MainSceneController {
 	public void radioSelectName(ActionEvent event) {
 		if (radioName.isSelected()) {
 			lblName.setStyle("-fx-text-fill: red;");
+			lblType.setStyle("-fx-text-fill: black;");
+			lblSn.setStyle("-fx-text-fill: black;");
+			txtSn.setEditable(false);
+			txtType.setEditable(false);
+			txtName.setEditable(true);
 		}
 	}
 	
@@ -162,6 +172,11 @@ public class MainSceneController {
 	public void radioSelectType(ActionEvent event) {
 		if (radioType.isSelected()) {
 			lblType.setStyle("-fx-text-fill: red;");
+			lblSn.setStyle("-fx-text-fill: black;");
+			lblName.setStyle("-fx-text-fill: black;");
+			txtName.setEditable(false);
+			txtSn.setEditable(false);
+			txtType.setEditable(true);
 		}
 	}
 	
