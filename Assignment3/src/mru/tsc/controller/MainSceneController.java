@@ -10,6 +10,8 @@ import mru.tsc.model.Figure;
 import mru.tsc.model.Puzzle;
 import mru.tsc.model.Toy;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.KeyAdapter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -26,8 +28,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ChoiceBox;
 
 /**
- * 
- * @author 
+ * controller class that includes event listeners and other methods
+ * @author Faizan and Raj
  *
  */
 public class MainSceneController {
@@ -37,13 +39,11 @@ public class MainSceneController {
 	
 	Scanner UserInput; // scanner object
 	
+	Scanner scan; // scanner object
+	
 	FileReader file; // file reader object
 	
 	BufferedReader input; // buffered reader object
-	
-	
-	@FXML
-	ObservableList<String> categoriesList = FXCollections.observableArrayList("Animal", "Board Game", "Figure", "Puzzle"); // categories for categorybox
 	
 	String sn; // toy serial number
 	 
@@ -119,6 +119,8 @@ public class MainSceneController {
 	@FXML
 	private Button btnRemove; // remove button 
 	
+	ToggleGroup radioGroup = new ToggleGroup();
+	
 	/**
 	 * constructor that creates new arraylist and loads data from text file
 	 * @throws Exception
@@ -131,10 +133,8 @@ public class MainSceneController {
 	@FXML
 	//
 	public void initialize() {
-		ObservableList<Toy> strList = FXCollections.observableArrayList(toys);
-		listView = new ListView<>(strList);
-		categoryBox.setItems(categoriesList);
-		ToggleGroup radioGroup = new ToggleGroup();
+		ObservableList<String> toyTypes = FXCollections.observableArrayList("Animal", "Board Game", "Figure", "Puzzle"); // categories for categorybox
+		categoryBox.setItems(toyTypes);
 		radioSn.setToggleGroup(radioGroup);
 		radioName.setToggleGroup(radioGroup);
 		radioType.setToggleGroup(radioGroup);
@@ -183,20 +183,34 @@ public class MainSceneController {
 	// Event Listener on Button[#btnSearch].onAction
 	@FXML
 	public void ClickSearch(ActionEvent event) {
-		Toy t = (Toy) listView.getSelectionModel().getSelectedItem();
-		for (Toy to: toys) {
-			if (to.getSn() == t.getSn()) {
-				// view list
-			} else if (to.getName() == t.getName()) {
-				// view list
-			} 
+		for (Toy t : toys) {
+			if (radioSn.isSelected()) {
+				if (txtSn.getText() == t.getSn()) {
+					
+				}
+				
+			} else if (radioName.isSelected()) {
+				if (txtName.getText() == t.getName()) {
+						
+			}
+				
+			} else if (radioType.isSelected()) {
+				
+			}
 		}
+	//	ObservableList<Toy> strList = FXCollections.observableArrayList(toys);
+	//	listView.setItems(strList);
 	}
 	
 	// Event Listener on Button[#btnClear].onAction
 	@FXML
-	public void ClickClear(ActionEvent event) {
+	public void ClickClear(ActionEvent event) throws Exception {
 		listView.getItems().clear();
+		radioGroup.selectToggle(null);
+		lblSn.setStyle("-fx-text-fill: black;");
+		lblName.setStyle("-fx-text-fill: black;");
+		lblType.setStyle("-fx-text-fill: black;");
+		// radio buttons 
 	}
 	
 	// Event Listener on Button[#btnBuy].onAction
@@ -205,9 +219,9 @@ public class MainSceneController {
 			Toy t = (Toy) listView.getSelectionModel().getSelectedItem();
 			for (Toy to: toys) {
 				if (to.getSn() == t.getSn()) {
-				int newCount = t.getAvailableCount();
-				newCount -= 1;
-				t.setAvailableCount(newCount);
+				int newAvailableCount = t.getAvailableCount();
+				newAvailableCount -= 1;
+				t.setAvailableCount(newAvailableCount);
 				save();
 				break;
 			}
