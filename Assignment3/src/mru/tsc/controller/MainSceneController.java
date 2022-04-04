@@ -208,8 +208,121 @@ public class MainSceneController {
 				}
 			}
 		}
-	}
+		
+		if (radioType.isSelected()) {
+		
+		// file object
+		File db = new File(FILE_NAME);
+		// scanner object
+		UserInput = new Scanner(System.in);
+		
+		// variable to store category type
+		String toyType = txtType.getText();
 
+		// used to read string
+		String valueString;
+		// each value contains different information about toy
+		String[] value;
+		
+		if(toyType.equalsIgnoreCase("Figure")) {
+			if (db.exists()) {
+				Scanner fileReader = new Scanner(db);
+				while (fileReader.hasNextLine()) {
+					valueString = fileReader.nextLine();
+					value = valueString.split(";");
+					char figur = value[0].charAt(0);
+					if (figur == '0' || figur == '1') {
+						String sn=value[0];
+						String name=value[1];
+						String brand=value[2];
+						double price=Double.parseDouble(value[3]);
+						int availCount=Integer.parseInt(value[4]);
+						int age=Integer.parseInt(value[5]);
+						char classification=value[6].charAt(0);
+						Toy figure=new Figure(sn,name,brand,price,availCount,age,classification);
+						figure.toString();
+						ObservableList<Toy> strList = FXCollections.observableArrayList(figure);
+						listView.setItems(strList);
+					}
+				}
+			}
+		}
+		
+		if(toyType.equalsIgnoreCase("Animal")) {
+			if (db.exists()) {
+				Scanner fileReader = new Scanner(db);
+				while (fileReader.hasNextLine()) {
+					valueString = fileReader.nextLine();
+					value = valueString.split(";");
+					char anima = value[0].charAt(0);
+					if (anima == '2' || anima == '3') {
+						String sn=value[0];
+						String name=value[1];
+						String brand=value[2];
+						double price=Double.parseDouble(value[3]);
+						int availCount=Integer.parseInt(value[4]);
+						int age=Integer.parseInt(value[5]);
+						String material=value[6];
+						char size=value[7].charAt(0);
+						Toy animal=new Animal(sn,name,brand,price,availCount,age,material,size);
+						animal.toString();
+						ObservableList<Toy> strList = FXCollections.observableArrayList(animal);
+						listView.setItems(strList);
+					}
+				}
+			}
+		}
+		
+		if(toyType.equalsIgnoreCase("Puzzle")) {
+			if (db.exists()) {
+				Scanner fileReader = new Scanner(db);
+				while (fileReader.hasNextLine()) {
+					valueString = fileReader.nextLine();
+					value = valueString.split(";");
+					char puzzl = value[0].charAt(0);
+					if (puzzl == '4' || puzzl == '5' || puzzl == '6') {
+						String sn=value[0];
+						String name=value[1];
+						String brand=value[2];
+						double price=Double.parseDouble(value[3]);
+						int availCount=Integer.parseInt(value[4]);
+						int age=Integer.parseInt(value[5]);
+						char puzzleType=value[6].charAt(0);
+						Toy puzzle = new  Puzzle(sn,name,brand,price,availCount,age,puzzleType);
+						puzzle.toString();
+						ObservableList<Toy> strList = FXCollections.observableArrayList(puzzle);
+						listView.setItems(strList);
+					}
+				}
+			}
+		}
+		
+		if(toyType.equalsIgnoreCase("Board Game")) {
+			if (db.exists()) {
+				Scanner fileReader = new Scanner(db);
+				while (fileReader.hasNextLine()) {
+					valueString = fileReader.nextLine();
+					value = valueString.split(";");
+					char boardGam = value[0].charAt(0);
+					if (boardGam == '7' || boardGam == '8' || boardGam == '9') {
+						String sn=value[0];
+						String name=value[1];
+						String brand=value[2];
+						double price=Double.parseDouble(value[3]);
+						int availCount=Integer.parseInt(value[4]);
+						int age=Integer.parseInt(value[5]);
+						String numPlayers=value[6];
+						String designer=value[7];
+						Toy boardgame=new BoardGame(sn,name,brand,price,availCount,age,numPlayers,designer);
+						boardgame.toString();
+						ObservableList<Toy> strList = FXCollections.observableArrayList(boardgame);
+						listView.setItems(strList);
+					}
+				}
+			}
+		}
+	}
+}
 	// Event Listener on Button[#btnClear].onAction
 	@FXML
 	public void ClickClear(ActionEvent event) throws Exception {
