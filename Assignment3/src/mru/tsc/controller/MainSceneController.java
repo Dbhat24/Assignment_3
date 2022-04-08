@@ -48,7 +48,7 @@ public class MainSceneController {
 	 
 	String brand; // toy brand
 	
-	double price; // price of toy
+	static protected double price; // price of toy
 	
 	int available_count; // amount of stock for toy
 	
