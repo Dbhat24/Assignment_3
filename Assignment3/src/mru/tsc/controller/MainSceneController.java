@@ -32,96 +32,94 @@ import javafx.scene.control.ChoiceBox;
 public class MainSceneController {
 	private final String FILE_NAME = "res/toys.txt"; //
 	
-	ArrayList<Toy> toys; // arraylist of toy
+	ArrayList<Toy> toys; /* arraylist of toy */
 	
-	Scanner UserInput; // scanner object
+	Scanner UserInput; /* scanner object */
 	
-	Scanner scan; // scanner object
+	Scanner scan; /* scanner object */
 	
-	FileReader file; // file reader object
+	FileReader file; /* file reader object */
 	
-	BufferedReader input; // buffered reader object
+	BufferedReader input; /* buffered reader object */
 	
-	String sn; // toy serial number
+	String sn; /* toy serial number */
 	 
-	String name; // toy name
+	String name; /* toy name */
 	 
-	String brand; // toy brand
+	String brand; /* toy brand */
 	
-	static protected double price; // price of toy
+	static protected double price; /* price of toy */
 	
-	int available_count; // amount of stock for toy
+	int available_count; /* amount of stock for toy */
 	
-	int age_appropriate; // age rating for toy
+	int age_appropriate; /* age rating for toy */
 
 	
 	@FXML
-	private RadioButton radioSn; // radiobutton for serial number
+	private RadioButton radioSn; /* radiobutton for serial number */
 	@FXML
-	private RadioButton radioName; // radiobutton for name
+	private RadioButton radioName; /* radiobutton for name */
 	@FXML
-	private RadioButton radioType; // radiobutton for type
+	private RadioButton radioType; /* radiobutton for type */
 	@FXML
-	private Label lblSn; // serial number label
+	private Label lblSn; /* serial number label */
 	@FXML
-	private TextField txtSn; // textfield serial number
+	private TextField txtSn; /* textfield serial number */
 	@FXML
-	private TextField txtName; // textfield name
+	private TextField txtName; /* textfield name */
 	@FXML
-	private TextField txtType; // textfield type
+	private TextField txtType; /* textfield type */
 	@FXML
-	private Label lblName; // name label
+	private Label lblName; /* name label */
 	@FXML
-	private Label lblType; // type label
+	private Label lblType; /* type label */
 	@FXML
-	private Button btnSearch; // search button
+	private Button btnSearch; /* search button */
 	@FXML
-	private Button btnClear; // clear button
+	private Button btnClear; /* clear button */
 	@FXML
-	private Button btnBuy; // buy button
+	private Button btnBuy; /* buy button */
 	@FXML
-	private ListView<Toy> listView; // list view home tab
+	private ListView<Toy> listView; /* list view home tab */
 	@FXML
-	private TextField txtSnAdd; // serial number add tab
+	private TextField txtSnAdd; /* serial number add tab */
 	@FXML
-	private TextField txtNameAdd; // name add tab
+	private TextField txtNameAdd; /* name add tab */
 	@FXML
-	private TextField txtBrand; // brand add tab
+	private TextField txtBrand; /* brand add tab */
 	@FXML
-	private TextField txtAgeAppropriate; // age appropriate add tab
+	private TextField txtAgeAppropriate; /* age appropriate add tab */
 	@FXML
-	private TextField txtAvailableCount; // available count add tab
+	private TextField txtAvailableCount; /* available count add tab */
 	@FXML
-	private TextField txtPrice; // price add tab
+	private TextField txtPrice; /* price add tab */
 	@FXML
-	private Button btnSave; // save button
+	private Button btnSave; /* save button */
 	@FXML
-	private TextField txtClassification; // classification add tab
+	private TextField txtClassification; /* classification add tab */
 	@FXML
-	private TextField txtPuzType; // puzzle type add tab
+	private TextField txtPuzType; /* puzzle type add tab */
 	@FXML
-	private TextField txtMaterial; // material add tab
+	private TextField txtMaterial; /* material add tab */
 	@FXML
-	private TextField txtSize; // size add tab
+	private TextField txtSize; /* size add tab */
 	@FXML
-	private TextField txtMinNumOfPlayers; // minimum number of players add tab
+	private TextField txtMinNumOfPlayers; /* minimum number of players add tab */
 	@FXML
-	private TextField txtMaxNumOfPlayers; // maximum number of players add tab
+	private TextField txtMaxNumOfPlayers; /* maximum number of players add tab */
 	@FXML
-	private TextField txtDesigners; // designer(s) add tab
+	private TextField txtDesigners; /* designer(s) add tab */
 	@FXML
-	private ChoiceBox<String> categoryBox; // category box containing types of toys
+	private ChoiceBox<String> categoryBox; /* category box containing types of toys */
 	@FXML
-	private TextField txtSnRemove; // serial number remove tab
+	private TextField txtSnRemove; /* serial number remove tab */
 	@FXML
-	private Button btnRemove; // remove button 
-
+	private Button btnRemove; /* remove button  */
 	@FXML
-	private ListView<Toy> listView2; // list view remove tab
+	private ListView<Toy> listView2; /* list view remove tab */
 	@FXML
-	private Button search2; // search button remove tab
-	
-	ToggleGroup radioGroup = new ToggleGroup(); // group radio buttons together
+	private Button search2; /* search button remove tab */
+	ToggleGroup radioGroup = new ToggleGroup(); /* group radio buttons together */
 	
 	/**
 	 * constructor that creates new arraylist and loads data from text file

@@ -42,7 +42,6 @@ public class Main extends Application {
 		try {
 			LogManager.getLogManager().reset();
 			FileHandler fh = new FileHandler("MyLogFile.log" , true);
-			fh = new FileHandler("res/MyLogFile.log" , true);
 			fh.setLevel(Level.ALL);
 			LOGR.addHandler(fh);
 		} catch (SecurityException e) {
