@@ -42,7 +42,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		try {
 			LogManager.getLogManager().reset();
-			FileHandler fh = new FileHandler("MyLogFile.log" , true);
+			FileHandler fh = new FileHandler("doc/MyLogFile.log" , true);
 			fh.setLevel(Level.ALL);
 			LOGR.addHandler(fh);
 		} catch (SecurityException e) {

@@ -207,7 +207,8 @@ public class MainSceneController {
 				}
 			}
 		}
-
+		
+		
 		if (radioType.isSelected()) {
 
 		// file object
