@@ -10,7 +10,7 @@ public class Animal extends Toy {
 	private String material;
 	// size variable
 	private char size;
-	
+
 	/**
 	 * Constructor with appropriate variables
 	 * @param sn toy serial number
@@ -27,14 +27,14 @@ public class Animal extends Toy {
 		this.material=material;
 		this.size=size;
 	}
-	
+
 	/**
 	 * constructor with no parameters
 	 */
 	public Animal() {
 		super();
 	}
-	
+
 	/**
 	 * getter for toy material variable
 	 * @return toy material
@@ -42,7 +42,7 @@ public class Animal extends Toy {
 	public String getMaterial() {
 		return material;
 	}
-	
+
 	/**
 	 * setter for toy material variable
 	 * @param material toy material
@@ -50,7 +50,7 @@ public class Animal extends Toy {
 	public void setMaterial(String material) {
 		this.material=material;
 	}
-	
+
 	/**
 	 * getter for toy size
 	 * @return toy size
@@ -58,7 +58,7 @@ public class Animal extends Toy {
 	public char getSize() {
 		return size;
 	}
-	
+
 	/**
 	 * setter for toy material variable
 	 * @param size toy size
@@ -66,17 +66,19 @@ public class Animal extends Toy {
 	public void setSize(char size) {
 		this.size=size;
 	}
-	
+
 	/**
-	 * Used to format animal 
+	 * Used to format animal
 	 */
+	@Override
 	public String toString() {
 		return "Category:" + "Animal," + " Serial Number:" + sn + "," +" Name:" + name + "," + " Brand:" + brand + "," + " Price:" + price + "," + " Available Count:" + available_count + "," + " Age:" + age_appropriate + "," + " Material:"+ material+ "," +  " Size:" + size;
 	}
-	
+
 	/**
 	 * Used to format animal in text file
 	 */
+	@Override
 	public String format() {
 		String s=String.format(sn+";"+name+";"+brand+";"+price+";"+available_count+";"+age_appropriate+";"+material+";"+size);
 		return s;

@@ -23,14 +23,14 @@ public class Figure extends Toy {
 		super(sn,name,brand,price,available_count,age_appropriate);
 		this.classification=classification;
 	}
-	
+
 	/**
 	 * constructor with no parameters
 	 */
 	public Figure() {
 		super();
 	}
-	
+
 	/**
 	 * getter for toy classification variable
 	 * @return toy classification
@@ -38,7 +38,7 @@ public class Figure extends Toy {
 	public char getClassification() {
 		return classification;
 	}
-	
+
 	/**
 	 * setter for toy classification variable
 	 * @param classification toy classification
@@ -46,17 +46,19 @@ public class Figure extends Toy {
 	public void setClassification(char classification) {
 		this.classification=classification;
 	}
-	
+
 	/**
 	 * Used to format figure
 	 */
+	@Override
 	public String toString() {
 		return "Category:" + "Figure" + "," + " Serial Number:" + sn + "," +" Name:" + name + "," + " Brand:" + brand + "," + " Price:" + price + "," + " Available Count:" + available_count + "," + " Age:" + age_appropriate + "," +" Classification:" + classification;
 	}
-	
+
 	/**
 	 * Used to format figure in text file
 	 */
+	@Override
 	public String format() {
 		String s=String.format(sn+";"+name+";"+brand+";"+price+";"+available_count+";"+age_appropriate+";"+classification);
 		return s;

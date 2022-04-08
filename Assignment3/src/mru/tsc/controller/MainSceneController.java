@@ -1,14 +1,5 @@
 package mru.tsc.controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import mru.tsc.model.Animal;
-import mru.tsc.model.BoardGame;
-import mru.tsc.model.Figure;
-import mru.tsc.model.Puzzle;
-import mru.tsc.model.Toy;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -16,13 +7,23 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import mru.tsc.model.Animal;
+import mru.tsc.model.BoardGame;
+import mru.tsc.model.Figure;
+import mru.tsc.model.Puzzle;
+import mru.tsc.model.Toy;
 
 /**
  * controller class that includes event listeners and other methods
@@ -31,30 +32,30 @@ import javafx.scene.control.ChoiceBox;
  */
 public class MainSceneController {
 	private final String FILE_NAME = "res/toys.txt"; //
-	
+
 	ArrayList<Toy> toys; /* arraylist of toy */
-	
+
 	Scanner UserInput; /* scanner object */
-	
+
 	Scanner scan; /* scanner object */
-	
+
 	FileReader file; /* file reader object */
-	
+
 	BufferedReader input; /* buffered reader object */
-	
+
 	String sn; /* toy serial number */
-	 
+
 	String name; /* toy name */
-	 
+
 	String brand; /* toy brand */
-	
+
 	static protected double price; /* price of toy */
-	
+
 	int available_count; /* amount of stock for toy */
-	
+
 	int age_appropriate; /* age rating for toy */
 
-	
+
 	@FXML
 	private RadioButton radioSn; /* radiobutton for serial number */
 	@FXML
@@ -120,7 +121,7 @@ public class MainSceneController {
 	@FXML
 	private Button search2; /* search button remove tab */
 	ToggleGroup radioGroup = new ToggleGroup(); /* group radio buttons together */
-	
+
 	/**
 	 * constructor that creates new arraylist and loads data from text file
 	 * @throws Exception
@@ -129,7 +130,7 @@ public class MainSceneController {
 		toys = new ArrayList<>();
 		loadData();
 	}
-	
+
 	@FXML
 	/**
 	 * Initialize method that creates categories for category box and items in toggle group
@@ -155,7 +156,7 @@ public class MainSceneController {
 			txtSn.setEditable(true);
 		}
 	}
-	
+
 	// Event Listener on RadioButton[#radioName].onAction
 	@FXML
 	public void radioSelectName(ActionEvent event) {
@@ -168,7 +169,7 @@ public class MainSceneController {
 			txtName.setEditable(true);
 		}
 	}
-	
+
 	// Event Listener on RadioButton[#radioType].onAction
 	@FXML
 	public void radioSelectType(ActionEvent event) {
@@ -181,7 +182,7 @@ public class MainSceneController {
 			txtType.setEditable(true);
 		}
 	}
-	
+
 	// Event Listener on Button[#btnSearch].onAction
 	@FXML
 	public void ClickSearch(ActionEvent event) throws Exception {
@@ -195,7 +196,7 @@ public class MainSceneController {
 				}
 			}
 		}
-		
+
 		for (Toy t : toys) {
 			if (radioName.isSelected()) {
 				if (txtName.getText().contains(t.getName())) {
@@ -206,14 +207,14 @@ public class MainSceneController {
 				}
 			}
 		}
-		
+
 		if (radioType.isSelected()) {
-		
+
 		// file object
 		File db = new File(FILE_NAME);
 		// scanner object
 		UserInput = new Scanner(System.in);
-		
+
 		// variable to store category type
 		String toyType = txtType.getText();
 
@@ -221,7 +222,7 @@ public class MainSceneController {
 		String valueString;
 		// each value contains different information about toy
 		String[] value;
-		
+
 		if(toyType.equalsIgnoreCase("Figure")) {
 			if (db.exists()) {
 				Scanner fileReader = new Scanner(db);
@@ -245,7 +246,7 @@ public class MainSceneController {
 				}
 			}
 		}
-		
+
 		if(toyType.equalsIgnoreCase("Animal")) {
 			if (db.exists()) {
 				Scanner fileReader = new Scanner(db);
@@ -270,7 +271,7 @@ public class MainSceneController {
 				}
 			}
 		}
-		
+
 		if(toyType.equalsIgnoreCase("Puzzle")) {
 			if (db.exists()) {
 				Scanner fileReader = new Scanner(db);
@@ -294,7 +295,7 @@ public class MainSceneController {
 				}
 			}
 		}
-		
+
 		if(toyType.equalsIgnoreCase("Board Game")) {
 			if (db.exists()) {
 				Scanner fileReader = new Scanner(db);
@@ -333,11 +334,11 @@ public class MainSceneController {
 		txtName.clear();
 		txtType.clear();
 	}
-	
+
 	// Event Listener on Button[#btnBuy].onAction
 	@FXML
 	public void ClickBuy(ActionEvent event) throws Exception {
-			Toy t = (Toy) listView.getSelectionModel().getSelectedItem();
+			Toy t = listView.getSelectionModel().getSelectedItem();
 			for (Toy to: toys) {
 				if (to.getSn() == t.getSn()) {
 				int newAvailableCount = t.getAvailableCount();
@@ -346,56 +347,56 @@ public class MainSceneController {
 				save();
 				break;
 			}
-		} 
+		}
 	}
-	
+
 	// Event Listener on Button[#btnSave].onAction
 	@FXML
 	public void ClickSave(ActionEvent event) throws Exception {
 		UserInput = new Scanner(System.in);
 		sn = txtSnAdd.getText();
-		
+
 		addCommonAttributes();
-		
+
 		if (categoryBox.getValue().equals("Animal")) {
 			String material = txtMaterial.getText();
-			
+
 			char size = txtSize.getText().charAt(0);
-			
+
 			Toy animals=new Animal(sn,name,brand,price,available_count,age_appropriate,material,size);
 			((Animal) animals).format();
 			toys.add(animals);
 		}
-		
+
 		if (categoryBox.getValue().equals("Board Game")) {
 			int minNumOfPlayers = Integer.parseInt(txtMinNumOfPlayers.getText());
 			int maxNumOfPlayers = Integer.parseInt(txtMaxNumOfPlayers.getText());
-			
+
 			String numOfPlayers="" + minNumOfPlayers + "-" +maxNumOfPlayers;
 			String designer = txtDesigners.getText();
-			
+
 			Toy boardgames=new BoardGame(sn,name,brand,price,available_count,age_appropriate,numOfPlayers,designer);
 			((BoardGame) boardgames).format();
 			toys.add(boardgames);
 		}
-		
+
 		if (categoryBox.getValue().equals("Figure")) {
 		char classification = txtClassification.getText().charAt(0);
 			Toy figures=new Figure(sn,name,brand,price,available_count,age_appropriate,classification);
 			((Figure) figures).format();
 			toys.add(figures);
 		}
-		
+
 		if (categoryBox.getValue().equals("Puzzle")) {
 			char puzzleType = txtPuzType.getText().charAt(0);
-			
+
 			Toy puzzles=new Puzzle(sn,name,brand,price,available_count,age_appropriate,puzzleType);
 			((Puzzle) puzzles).format();
 			toys.add(puzzles);
 		}
 		save();
 	}
-	
+
 	// Event Listener on Button[#search2].onAction
 	@FXML
 	public void ClickSearch2(ActionEvent event) {
@@ -408,11 +409,11 @@ public class MainSceneController {
 			}
 		}
 	}
-	
+
 	// Event Listener on Button[#btnRemove].onAction
 	@FXML
 	public void ClickRemove(ActionEvent event) throws Exception {
-		Toy t = (Toy) listView2.getSelectionModel().getSelectedItem();
+		Toy t = listView2.getSelectionModel().getSelectedItem();
 		for (Toy to: toys) {
 			if(to.getSn() == t.getSn()) {
 				to = t;
@@ -421,7 +422,7 @@ public class MainSceneController {
 			}
 		}
 	}
-	
+
 	/**
 	 * groups all common attributes
 	 */
@@ -432,38 +433,38 @@ public class MainSceneController {
 		available_count = Integer.parseInt(txtAvailableCount.getText());
 		age_appropriate = Integer.parseInt(txtAgeAppropriate.getText());
 	}
-	
+
 	/**
 	 * load data method that loads the data from the text file
 	 * @throws IOException
 	 */
 	public void loadData() throws IOException {
-		File db = new File(FILE_NAME); 
+		File db = new File(FILE_NAME);
 		String currentLine;
 		String [] splittedLine;
-		
+
 		if(db.exists()) {
 			Scanner fileReader = new Scanner(db);
-			
+
 			while (fileReader.hasNextLine()) {
-				
+
 				currentLine = fileReader.nextLine();
 				splittedLine = currentLine.split(";");
-				
+
 				char id = splittedLine[0].charAt(0);
-				
+
 				if (id == '0' || id == '1') {
 					String sn = splittedLine[0];
 					String name = splittedLine[1];
 					String brand = splittedLine[2];
 					double price = Double.parseDouble(splittedLine[3]);
 					int avlCount = Integer.parseInt(splittedLine[4]);
-					int ageApp = Integer.parseInt(splittedLine[5].split("[;:-]")[0]);	
+					int ageApp = Integer.parseInt(splittedLine[5].split("[;:-]")[0]);
 					char classification = splittedLine[6].charAt(0);
 					Figure f = new Figure(sn,name,brand,price,avlCount,ageApp,classification);
 					f.toString();
 					toys.add(f);
-					
+
 				}
 				if (id =='2'||id =='3') {
 					String sn = splittedLine[0];
@@ -471,13 +472,13 @@ public class MainSceneController {
 					String brand = splittedLine[2];
 					double price = Double.parseDouble(splittedLine[3]);
 					int avlCount = Integer.parseInt(splittedLine[4]);
-					int ageApp = Integer.parseInt(splittedLine[5].split("[;:-]")[0]);		
+					int ageApp = Integer.parseInt(splittedLine[5].split("[;:-]")[0]);
 					String material = splittedLine[6];
 					char size = splittedLine[7].charAt(0);
 					Animal a = new Animal(sn,name,brand,price,avlCount,ageApp,material,size);
 					a.toString();
 					toys.add(a);
-					
+
 				}
 				if (id == '4' || id == '5' || id == '6') {
 					String sn = splittedLine[0];
@@ -485,12 +486,12 @@ public class MainSceneController {
 					String brand = splittedLine[2];
 					double price = Double.parseDouble(splittedLine[3]);
 					int avlCount = Integer.parseInt(splittedLine[4]);
-					int ageApp = Integer.parseInt(splittedLine[5].split("[;:-]")[0]);	
+					int ageApp = Integer.parseInt(splittedLine[5].split("[;:-]")[0]);
 					char puzType = splittedLine[6].charAt(0);
 					Puzzle p = new Puzzle(sn,name,brand,price,avlCount,ageApp,puzType);
 					p.toString();
 					toys.add(p);
-			
+
 				}
 				if (id == '7' || id == '8' || id == '9' ) {
 					String sn = splittedLine[0];
@@ -498,18 +499,18 @@ public class MainSceneController {
 					String brand = splittedLine[2];
 					double price = Double.parseDouble(splittedLine[3]);
 					int avlCount = Integer.parseInt(splittedLine[4]);
-					int ageApp = Integer.parseInt(splittedLine[5].split("[;:-]")[0]);	
+					int ageApp = Integer.parseInt(splittedLine[5].split("[;:-]")[0]);
 					String numPlayers = splittedLine[6];
 					String designer = splittedLine[7].split("[;:-]")[0];
 					BoardGame bg = new BoardGame(sn,name,brand,price,avlCount,ageApp,numPlayers,designer);
-					bg.toString(); 
+					bg.toString();
 					toys.add(bg);
-				} 
+				}
 			}
 			fileReader.close();
 		}
 	}
-	
+
 	/**
 	 * save method that saves data into text file
 	 * @throws IOException
@@ -517,10 +518,10 @@ public class MainSceneController {
 	public void save() throws IOException {
 		File db = new File(FILE_NAME);
 		PrintWriter pw = new PrintWriter(db);
-		
+
 		System.out.println("Saving Data Into Database...");
 		System.out.println("\n********** THANKS FOR VISITING US! **********");
-		
+
 		for (Toy t : toys) {
 			pw.println(t.format());
 		}
